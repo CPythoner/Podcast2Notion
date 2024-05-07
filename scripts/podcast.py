@@ -237,7 +237,7 @@ def insert_podcast():
             "type": "database_id",
         }
         print(
-            f"正在同步 = {result.get('title')}-{podcast["Pid"]}，共{len(results)}个播客，当前是第{index+1}个"
+            f"正在同步 = {result.get('title')}-{podcast['Pid']}，共{len(results)}个播客，当前是第{index+1}个"
         )
 
         page_id = check_podcast(pid)
