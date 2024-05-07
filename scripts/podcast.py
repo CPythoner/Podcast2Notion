@@ -239,7 +239,7 @@ def insert_podcast():
         print(
             f"正在同步 = {result.get('title')}，共{len(results)}个播客，当前是第{index+1}个"
         )
-        
+
         page_id = check_podcast(pid)
         if page_id:
             notion_helper.update_page(page_id=page_id, properties=properties)
@@ -250,13 +250,26 @@ def insert_podcast():
         dict[pid] =(page_id, cover)
     return dict
 
+def need_to_be_excluded(podcast_title, exclude_podcasts):
+    for item in exclude_podcasts:
+        if item in podcast_title:
+            return True
+    return False
 
 def insert_episode(episodes, d):
     episodes.sort(key=lambda x: x["pubDate"])
+    # 要排除的 podcast 列表
+    exclude_podcasts = os.getenv("EXCLUDE_PODCASTS").split(";")
+    # print('exclude_podcasts:', exclude_podcasts)
     for index, result in enumerate(episodes):
         pid = result.get("pid")
         if pid not in d:
             continue
+
+        if need_to_be_excluded(d.get(pid)[0], exclude_podcasts):
+            # print("d.get(pid)[0]", d.get(pid)[0])
+            continue
+
         episode = {}
         episode["标题"] = result.get("title")
         episode["Description"] = result.get("description")
@@ -265,7 +278,7 @@ def insert_episode(episodes, d):
         episode["音频"] = result.get("media").get("source").get("url")
         eid = result.get("eid")
         episode["Eid"] = eid
- 
+
         episode["时长"] = result.get("duration")
         episode["喜欢"] = result.get("isPicked")
         episode["Podcast"] = [d.get(pid)[0]]
