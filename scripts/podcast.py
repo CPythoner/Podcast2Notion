@@ -260,14 +260,14 @@ def insert_episode(episodes, d):
     episodes.sort(key=lambda x: x["pubDate"])
     # 要排除的 podcast 列表
     exclude_podcasts = os.getenv("EXCLUDE_PODCASTS").split(";")
-    # print('exclude_podcasts:', exclude_podcasts)
+    print('exclude_podcasts:', exclude_podcasts)
     for index, result in enumerate(episodes):
         pid = result.get("pid")
         if pid not in d:
             continue
 
         if need_to_be_excluded(d.get(pid)[0], exclude_podcasts):
-            # print("d.get(pid)[0]", d.get(pid)[0])
+            print("d.get(pid)[0]", d.get(pid)[0])
             continue
 
         episode = {}
