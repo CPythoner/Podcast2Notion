@@ -266,8 +266,8 @@ def insert_episode(episodes, d):
         if pid not in d:
             continue
 
+        print("d.get(pid)[0]", d.get(pid)[0])
         if need_to_be_excluded(d.get(pid)[0], exclude_podcasts):
-            print("d.get(pid)[0]", d.get(pid)[0])
             continue
 
         episode = {}
