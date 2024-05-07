@@ -290,6 +290,7 @@ def insert_episode(episodes, d):
             status = "在听"
         episode["状态"] = status
         properties = utils.get_properties(episode, book_properties_type_dict)
+        print('properties:', properties)
         print(
             f"正在同步 = {result.get('title')}，共{len(episodes)}个Episode，当前是第{index+1}个"
         )
